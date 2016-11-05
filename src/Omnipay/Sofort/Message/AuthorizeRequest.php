@@ -15,10 +15,14 @@ class AuthorizeRequest extends AbstractRequest
         $data->addChild('currency_code', $this->getCurrency());
         $data->addChild('success_url', str_replace('&', '&amp;', $this->getReturnUrl()));
         $data->addChild('abort_url', str_replace('&', '&amp;', $this->getCancelUrl()));
-        $data->addChild('notification_urls')->addChild(
-            'notification_url',
-            str_replace('&', '&amp;', $this->getNotifyUrl())
-        );
+        
+    	// Skip the notification url if configured via constant
+    	$skipNotify = defined(SOFORT_SKIP_NOTIFY_URL) ? boolval(SOFORT_SKIP_NOTIFY_URL) : false; 
+        if($skipNotify)
+	        $data->addChild('notification_urls')->addChild(
+	            'notification_url',
+	            str_replace('&', '&amp;', $this->getNotifyUrl())
+	        );
 
         $reasons = $data->addChild('reasons');
 
