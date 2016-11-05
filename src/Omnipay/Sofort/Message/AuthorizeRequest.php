@@ -17,7 +17,7 @@ class AuthorizeRequest extends AbstractRequest
         $data->addChild('abort_url', str_replace('&', '&amp;', $this->getCancelUrl()));
         
     	// Skip the notification url if configured via constant
-    	$skipNotify = defined(SOFORT_SKIP_NOTIFY_URL) ? boolval(SOFORT_SKIP_NOTIFY_URL) : false; 
+    	$skipNotify = defined('SOFORT_SKIP_NOTIFY_URL') ? boolval(SOFORT_SKIP_NOTIFY_URL) : false; 
         if($skipNotify)
 	        $data->addChild('notification_urls')->addChild(
 	            'notification_url',
